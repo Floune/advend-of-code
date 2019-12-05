@@ -7,33 +7,43 @@ def integerize(value):
 
 
 def resolveOpCode(array, noun, verb):
-	tmp = array
 	size = len(array)
-	tmp[1] = noun
-	tmp[2] = verb
+	array[1] = noun
+	array[2] = verb
 	i = 0
 	while i < size:
-		one = tmp[i + 1]
-		two = tmp[i + 2]
-		result = tmp[i + 3]
-		if (tmp[i] == 1):
-			tmp[result] = tmp[one] + tmp[two]
+		one = array[i + 1]
+		two = array[i + 2]
+		result = array[i + 3]
+		if (array[i] == 1):
+			array[result] = array[one] + array[two]
 		elif (array[i] == 2):
-			tmp[result] = tmp[one] * tmp[two]
+			array[result] = array[one] * array[two]
 		else:
-			return tmp
+			return array
 		i += 4
-	return tmp
+	return array
 
 
-def findOp():
-	return [1, 2]
+def findOp(intValues):
+	theOne = 19690720
+	noun = 0
+	verb = 0
+	while noun <= 99:
+		verb = 0
+		while verb <= 99:
+			if (resolveOpCode(intValues[:], noun, verb)[0] == theOne):
+				return [noun, verb]
+			verb += 1
+		noun += 1
+
+	return 'not found...'
 
 def main():
 	values = []
 	with open('data.txt') as file:
 		values = file.read().split(',')
 	intValues = list(map(integerize, values))
-	print(findOp())
-
+	print(findOp(intValues))
+	
 main()
